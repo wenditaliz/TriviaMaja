@@ -1,0 +1,121 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>TRIVIA MAJA</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            plugins: [daisyui],
+            daisyui: { themes: ["light", "dark"] },
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+
+<style>
+
+</style>
+
+</head>
+
+    <body>
+        <div class="contenedorTrivia">
+            <h1>TRIVIA MAJA</h1>
+            <img src="https://maja-front-592370419129.us-central1.run.app/assets/images/MAJA_LOGOTYPE_01.png" alt="MAJA">
+            <div id="trivia"></div>
+            <button id="btnJugar">Jugar</button>
+            <h5 id="puntaje"></h5>
+
+    <script>
+
+        let preguntas = []
+        let indice = 0, puntos = 0
+
+        const divTrivia = document.getElementById("trivia")
+        const puntaje = document.getElementById("puntaje")
+        const btnJugar = document.getElementById("btnJugar");
+
+         function obtenerEstacion() {
+            const mes = new Date().getMonth();
+            if (mes >= 2 && mes <= 4) return "primavera";
+            if (mes >= 5 && mes <= 7) return "verano";
+            if (mes >= 8 && mes <= 10) return "otoño";
+            return "invierno";
+        }
+
+        btnJugar.addEventListener("click", cargarPreguntas);
+
+        function cargarPreguntas(){
+            fetch("preguntas.json") //manipula el https
+            .then(res => res.json()) //promesa que devuelve respuesta
+            .then(data => {
+
+                const estacion = obtenerEstacion();
+                preguntas = data[estacion]
+
+                if (!Array.isArray(preguntas)) {
+                    divTrivia.innerHTML = "<p>Error: No se pudo cargar la trivia.</p>";
+                    return;
+                }
+
+
+                preguntas.sort(() => Math.random() -0.5) //sort ordena elementos
+                
+                indice = 0;
+                puntos = 0;
+                puntaje.innerHTML = ""
+                mostrarPregunta()
+                
+            })
+
+            .catch(error => {
+                console.error("Error al obtener la trivia :(", error)
+                divTrivia.innerHTML = ("<p>La trivia no se cargo correctamente :(</p>")
+
+            })
+
+            function mostrarPregunta(){
+                if(indice >= preguntas.length){
+                    finalizarTrivia()
+                    return
+                }
+
+            const t = preguntas[indice]
+            const opciones = [...t.opciones];
+            opciones.sort(() => Math.random() - 0.5);
+
+                divTrivia.innerHTML = `
+                    <div class="pregunta">${t.pregunta}</div>
+                    ${opciones.map(op => `<button onclick="verificarRespuesta('${op}','${t.respuestaCorrecta}')">${op}</button>`).join("")}
+                `;
+            }
+
+            function verificarRespuesta(opcion) {
+            if (opcion === preguntas[indice].respuestaCorrecta) {
+                puntos++;
+            }
+            indice++;
+            mostrarPregunta();
+            }
+
+            function finalizarTrivia() {
+                divTrivia.innerHTML = "";
+                let premio = "";
+                if (puntos === preguntas.length) {
+                    premio = "¡Cupón 20% de descuento!";
+                } else if (puntos >= Math.ceil(preguntas.length / 2)) {
+                    premio = "¡Cupón 10% de descuento!";
+                } else {
+                    premio = "¡Cupón de envío gratis!";
+                }
+                puntaje.innerHTML = `Tu puntaje: ${puntos}/${preguntas.length} <br> ${premio}`;    
+                }
+            }
+
+    </script>
+
+        </div>
+    </body>
+
+</html>

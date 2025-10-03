@@ -1,0 +1,33 @@
+/* Pregunta destacada */
+.pregunta {
+  @apply text-lg font-bold mb-4 text-center;
+}
+
+/* Opciones como botones */
+.opciones button {
+  @apply btn btn-outline btn-accent w-full;
+}
+
+/* Puntaje final */
+.puntaje {
+  @apply text-primary mt-4;
+}
+
+/* Título y logo */
+.titulo {
+  @apply text-4xl text-secondary;
+}
+
+.logo {
+  @apply w-40 rounded-lg shadow;
+}
+
+/* Botón de jugar extra */
+.btn-jugar {
+  @apply uppercase tracking-wide;
+}
+
+/* Resultado */
+.resultado {
+  @apply text-center;
+}
