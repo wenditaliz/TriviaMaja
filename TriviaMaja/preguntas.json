@@ -45,7 +45,7 @@
   { "id": 20, "pregunta": "¿Qué prenda de playa se combina con bikini?", "opciones": ["Pareos", "Abrigo de lana", "Sudadera polar", "Parka"], "respuestaCorrecta": "Pareos" }
   ],
 
-  "otoño": [
+  "otono": [
   { "id": 1, "pregunta": "¿Cuál es el color clásico del otoño?", "opciones": ["Mostaza", "Celeste", "Blanco", "Plateado"], "respuestaCorrecta": "Mostaza" },
   { "id": 2, "pregunta": "¿Qué prenda no puede faltar en otoño?", "opciones": ["Suéter", "Short de playa", "Camiseta sin mangas", "Sandalias"], "respuestaCorrecta": "Suéter" },
   { "id": 3, "pregunta": "¿Qué estampado caracteriza el otoño?", "opciones": ["Cuadros", "Floral", "Tie-dye", "Geométrico"], "respuestaCorrecta": "Cuadros" },
