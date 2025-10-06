@@ -42,29 +42,30 @@ const aplicarTema = (estacionActual) => {
     const boton = document.getElementById("btnJugar");
     const imagenDiv = document.getElementById("imagenEstacion");
 
-    // Clases base consistentes
+    // Clases base 
     body.className = "flex flex-col items-center min-h-screen p-6";
     card.className = "card shadow-xl p-6 w-full max-w-lg";
     boton.className = "btn btn-block w-full mb-4 rounded-md font-bold py-3 px-4 transition-colors duration-300";
 
     if (tema) {
-        body.classList.add(tema.body);
-        card.classList.add(tema.card);
-
+    body.classList.add(tema.body);
+    card.classList.add(tema.card);
+    aplicarColorTitulo(estacionActual);
+    
         if (imagenDiv) {
             imagenDiv.innerHTML = `<img src="img/${tema.imagen}" alt="${estacionActual}" class="w-full h-40 object-cover rounded mb-4">`;
         }
-        // Aplica los colores del botón
+
         tema.botonColor.split(" ").forEach(cls => boton.classList.add(cls));
     }
 
-    // Tema de DaisyUI
     let theme = "aqua";
     if (estacionActual === "primavera") theme = "valentine";
     else if (estacionActual === "verano") theme = "lemonade";
     else if (estacionActual === "otono") theme = "retro";
     else if (estacionActual === "invierno") theme = "winter";
     document.documentElement.setAttribute("data-theme", theme);
+
 };
 
 const aplicarColorTitulo = (estacionActual) => {
@@ -87,5 +88,13 @@ const aplicarColorTitulo = (estacionActual) => {
         invierno: "text-cyan-700"
     };
 
+    const textos = {
+        primavera: "Maja Primavera",
+        verano: "Maja Verano",
+        otono: "Maja Otoño",
+        invierno: "Maja Invierno"
+    };
+
     titulo.classList.add(colores[estacionActual] || "text-slate-800");
+    titulo.textContent = textos[estacionActual] || "Trivia Maja";
 };

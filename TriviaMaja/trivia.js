@@ -7,20 +7,21 @@ const puntaje = document.getElementById("puntaje");
 const btnJugar = document.getElementById("btnJugar");
 
 const cargarPreguntas = () => {
-    estacionActual = obtenerEstacion(); // ← usa la variable global
+    //estacionActual = obtenerEstacion(); 
+    estacionActual = "verano";
     aplicarColorTitulo(estacionActual);
     btnJugar.style.display = "none";
 
-    fetch("preguntas.json")
-        .then(res => res.json())
-        .then(data => {
+    axios.get("preguntas.json")
+        .then(res => {
+            const datos=res.data;
             console.log("Estación actual:", estacionActual);
-            preguntas = data[estacionActual];
+            preguntas = datos[estacionActual];
 
             aplicarTema(estacionActual);
 
-            if (!Array.isArray(preguntas)) {
-                divTrivia.innerHTML = "<p>Error: No se pudo cargar la trivia.</p>";
+            if(!Array.isArray(preguntas)){
+                divTrivia.innerHTML = "<p>Error: No se  pudo cargar la trivia :(<p>";
                 return;
             }
 
@@ -46,8 +47,7 @@ function mostrarPregunta() {
     const preguntaActual = preguntas[indice];
     const opciones = [...preguntaActual.opciones].sort(() => Math.random() - 0.5);
 
-    // Obtener color del tema actual
-    const estacion = obtenerEstacion(); // o usar obtenerEstacion();
+    const estacion = obtenerEstacion(); 
     const colorClase = temas[estacionActual]?.botonColor || "bg-blue-900 text-white";
 
     divTrivia.innerHTML = `
@@ -75,17 +75,25 @@ function finalizarTrivia() {
     divTrivia.innerHTML = "";
     let premio = "";
 
-    if (puntos === preguntas.length) premio = "¡Cupón 20% de descuento!";
-    else if (puntos >= Math.ceil(preguntas.length / 2)) premio = "¡Cupón 10% de descuento!";
-    else premio = "¡Cupón de envío gratis!";
+    if (puntos === preguntas.length) {
+        premio = "¡Cupón 20% de descuento!";
+    } else if (puntos >= Math.ceil(preguntas.length / 2)) {
+        premio = "¡Cupón 10% de descuento!";
+    } else if (puntos === 0) {
+        premio = "¡Suerte para la próxima!";
+    } else {
+        premio = "¡Cupón de envío gratis!";
+    }
 
     puntaje.innerHTML = `Tu puntaje: ${puntos}/${preguntas.length} <br> ${premio}`;
 
-    const btnCupon = document.createElement("button");
-    btnCupon.textContent = "Imprimir cupón de regalo";
-    btnCupon.className = "btn btn-success w-full mt-4";
-    btnCupon.onclick = () => window.print();
-    divTrivia.appendChild(btnCupon);
+    if (puntos > 0) {
+        const btnCupon = document.createElement("button");
+        btnCupon.textContent = "Imprimir cupón de regalo";
+        btnCupon.className = "btn btn-outline w-full mt-4";
+        btnCupon.onclick = () => window.print();
+        divTrivia.appendChild(btnCupon);
+    }
 }
 
 btnJugar.addEventListener("click", cargarPreguntas);
