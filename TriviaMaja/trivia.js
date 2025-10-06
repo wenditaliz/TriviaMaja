@@ -6,19 +6,21 @@ const divTrivia = document.getElementById("trivia");
 const puntaje = document.getElementById("puntaje");
 const btnJugar = document.getElementById("btnJugar");
 
-const cargarPreguntas = () => {
+const cargarPreguntas = async () => {
+
+    try{
     //estacionActual = obtenerEstacion(); 
-    estacionActual = "verano";
+    estacionActual = "otono";
     aplicarColorTitulo(estacionActual);
     btnJugar.style.display = "none";
 
-    axios.get("preguntas.json")
-        .then(res => {
-            const datos=res.data;
-            console.log("Estación actual:", estacionActual);
-            preguntas = datos[estacionActual];
+    const respuestaAxios = await axios.get("preguntas.json");
+    const datos = respuestaAxios.data;
 
-            aplicarTema(estacionActual);
+    console.log("Estación actual:", estacionActual);
+    preguntas= datos[estacionActual];
+
+    aplicarTema(estacionActual);
 
             if(!Array.isArray(preguntas)){
                 divTrivia.innerHTML = "<p>Error: No se  pudo cargar la trivia :(<p>";
@@ -31,11 +33,11 @@ const cargarPreguntas = () => {
             puntos = 0;
             puntaje.innerHTML = "";
             mostrarPregunta();
-        })
-        .catch(error => {
+
+    }catch(error) {
             console.error("Error al obtener la trivia:", error);
             divTrivia.innerHTML = "<p>La trivia no se cargó correctamente :(</p>";
-        });
+        };
 };
 
 function mostrarPregunta() {
@@ -45,7 +47,9 @@ function mostrarPregunta() {
     }
 
     const preguntaActual = preguntas[indice];
-    const opciones = [...preguntaActual.opciones].sort(() => Math.random() - 0.5);
+    //const opciones = [...preguntaActual.opciones].sort(() => Math.random() - 0.5);
+    const opciones = preguntaActual.opciones.sort(() => Math.random() - 0.5);
+
 
     const estacion = obtenerEstacion(); 
     const colorClase = temas[estacionActual]?.botonColor || "bg-blue-900 text-white";
