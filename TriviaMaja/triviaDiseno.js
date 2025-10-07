@@ -12,25 +12,25 @@ const temas = {
         body: "bg-green-100",
         card: "bg-green-200",
         botonColor: "bg-green-500 hover:bg-green-600 text-white",
-        imagen: "primavera.avif"
+        imagenes: ["bobesponja.jpg","homero.avif","snoopy.jpg"]
     },
     verano: {
         body: "bg-yellow-100",
         card: "bg-yellow-200",
         botonColor: "bg-yellow-500 hover:bg-yellow-600 text-white",
-        imagen: "verano.avif"
+        imagenes: ["homero.jpg", "mabel.webp","star.png"]
     },
     otono: {
         body: "bg-orange-100",
         card: "bg-orange-200",
         botonColor: "bg-orange-500 hover:bg-orange-600 text-white",
-        imagen: "otono.avif"
+        imagenes: ["bugsbunny.jpg","gravittyfalls.jpg","winniepooh.jgp"]
     },
     invierno: {
         body: "bg-blue-100",
         card: "bg-blue-200",
         botonColor: "bg-blue-500 hover:bg-blue-600 text-white",
-        imagen: "invierno.avif"
+        imagenes: ["bobesponja.webp", "chillywilly.jpg", "snoopy.jpg"]
     }
 };
 
@@ -51,9 +51,15 @@ const aplicarTema = (estacionActual) => {
     body.classList.add(tema.body);
     card.classList.add(tema.card);
     aplicarColorTitulo(estacionActual);
-    
+
         if (imagenDiv) {
-            imagenDiv.innerHTML = `<img src="img/${tema.imagen}" alt="${estacionActual}" class="w-full h-40 object-cover rounded mb-4">`;
+
+            const imagenes = tema.imagenes;
+            const imagenAleatoria = imagenes[Math.floor(Math.random() * imagenes.length)];
+
+             imagenDiv.innerHTML = `<img src="img/${estacionActual}/${imagenAleatoria}" 
+             alt="${estacionActual}" class="w-full h-40 object-cover rounded mb-4">`;
+
         }
 
         tema.botonColor.split(" ").forEach(cls => boton.classList.add(cls));

@@ -10,7 +10,7 @@ const cargarPreguntas = async () => {
 
     try{
     //estacionActual = obtenerEstacion(); 
-    estacionActual = "otono";
+    estacionActual = "invierno";
     aplicarColorTitulo(estacionActual);
     btnJugar.style.display = "none";
 
@@ -92,9 +92,19 @@ function finalizarTrivia() {
     puntaje.innerHTML = `Tu puntaje: ${puntos}/${preguntas.length} <br> ${premio}`;
 
     if (puntos > 0) {
+        const btnJugarRef = document.getElementById("btnJugar");
         const btnCupon = document.createElement("button");
         btnCupon.textContent = "Imprimir cupón de regalo";
-        btnCupon.className = "btn btn-outline w-full mt-4";
+
+        // Copiar todas las clases del botón Jugar
+        if (btnJugarRef) {
+            btnCupon.className = btnJugarRef.className;
+        } else {
+            btnCupon.className = "btn btn-block w-full mb-4";
+        }
+
+        btnCupon.classList.add("no-imprimir");
+
         btnCupon.onclick = () => window.print();
         divTrivia.appendChild(btnCupon);
     }
