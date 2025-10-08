@@ -10,7 +10,7 @@ const cargarPreguntas = async () => {
 
     try{
     //estacionActual = obtenerEstacion(); 
-    estacionActual = "invierno";
+    estacionActual = "primavera";
     aplicarColorTitulo(estacionActual);
     btnJugar.style.display = "none";
 

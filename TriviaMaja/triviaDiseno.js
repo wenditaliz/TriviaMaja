@@ -43,8 +43,14 @@ const aplicarTema = (estacionActual) => {
     const imagenDiv = document.getElementById("imagenEstacion");
 
     // Clases base 
-    body.className = "flex flex-col items-center min-h-screen p-6";
-    card.className = "card shadow-xl p-6 w-full max-w-lg";
+    //body.className = "flex flex-col items-center min-h-screen p-6";
+    body.className = "flex items-center justify-center min-h-screen p-4 sm:p-6";
+    //card.className = "card shadow-xl p-6 w-full max-w-lg";
+    card.className=`card shadow-xl p-6 
+        w-full max-w-xs sm:max-w-sm md:max-w-md 
+        min-h-[420px] sm:min-h-[480px] md:min-h-[520px]
+        flex flex-col justify-between 
+        rounded-2xl transition-all duration-300`;
     boton.className = "btn btn-block w-full mb-4 rounded-md font-bold py-3 px-4 transition-colors duration-300";
 
     if (tema) {
@@ -57,8 +63,11 @@ const aplicarTema = (estacionActual) => {
             const imagenes = tema.imagenes;
             const imagenAleatoria = imagenes[Math.floor(Math.random() * imagenes.length)];
 
-             imagenDiv.innerHTML = `<img src="img/${estacionActual}/${imagenAleatoria}" 
-             alt="${estacionActual}" class="w-full h-40 object-cover rounded mb-4">`;
+             //imagenDiv.innerHTML = `<img src="img/${estacionActual}/${imagenAleatoria}" 
+             //alt="${estacionActual}" class="w-full h-40 object-cover rounded mb-4">`;
+              imagenDiv.innerHTML = `<img src="img/${estacionActual}/${imagenAleatoria}" 
+                alt="${estacionActual}" 
+                class="w-full h-40 sm:h-48 object-cover rounded mb-4 shadow-md">`;
 
         }
 
