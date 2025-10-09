@@ -40,7 +40,8 @@ const cargarPreguntas = async () => {
         };
 };
 
-function mostrarPregunta() {
+//function mostrarPregunta() {
+const mostrarPregunta = async () => {
     if (indice >= preguntas.length) {
         finalizarTrivia();
         return;
@@ -69,13 +70,15 @@ function mostrarPregunta() {
 }
 
 
-function verificarRespuesta(opcion, correcta) {
+//function verificarRespuesta(opcion, correcta) {
+const verificarRespuesta = async (opcion,correcta) => {
     if (opcion === correcta) puntos++;
     indice++;
     mostrarPregunta();
 }
 
-function finalizarTrivia() {
+//function finalizarTrivia() {
+const finalizarTrivia = async () => {
     divTrivia.innerHTML = "";
     let premio = "";
 
